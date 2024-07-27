@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TrendsMeme" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Theme for splash screen -->
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- theme of the activity which will be displayed after the splash screen -->
+        <item name="postSplashScreenTheme">@style/Theme.TrendsMeme</item>
+    </style>
+</resources>

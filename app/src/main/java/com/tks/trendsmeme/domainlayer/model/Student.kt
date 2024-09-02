@@ -1,4 +1,4 @@
-package com.tks.trendsmeme.model
+package com.tks.trendsmeme.domainlayer.model
 
 data class Student(
     val studentName: String,

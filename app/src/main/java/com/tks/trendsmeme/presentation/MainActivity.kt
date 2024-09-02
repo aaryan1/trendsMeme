@@ -1,4 +1,4 @@
-package com.tks.trendsmeme
+package com.tks.trendsmeme.presentation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,17 +24,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
 import com.tks.trendsmeme.ui.theme.TrendsMemeTheme
+import com.tks.trendsmeme.utils.SingleSelectDialog
 import androidx.compose.material3.Text as Text1
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +47,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TrendsMemeTheme {
                 LoginScreen()
+                //MyScreen()
             }
         }
     }
@@ -102,5 +102,38 @@ fun LoginScreen() {
 @Composable
 fun LoginScreenPreview() {
     LoginScreen()
+}
+
+@Composable
+fun MyScreen() {
+
+    var showDialog by remember {
+        mutableStateOf(
+            false
+        )
+    }
+    var selectedFruit by remember {
+        mutableStateOf<String?>(
+            null
+        )
+    }
+    val fruits = listOf("Apple", "Banana", "Orange", "Grape")
+
+    Column {
+        Text("Selected fruit: $selectedFruit")
+        Button(onClick = {
+             showDialog = true
+        }) {
+            Text("Show Dialog")
+        }
+        if (showDialog) {
+            SingleSelectDialog(
+                options = fruits,
+                selectedOption = selectedFruit,
+                onOptionSelected = { selectedFruit = it },
+                onDismiss = { showDialog = false }
+            )
+        }
+    }
 }
 

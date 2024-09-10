@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.tks.trendsmeme.R
 
 class CustomComponents {
 
@@ -52,7 +54,7 @@ fun ReusableEditText(
         Button(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red
+                containerColor = colorResource(R.color.button_color)
             ),
             modifier = modifier
                 .background(
@@ -71,7 +73,7 @@ fun ReusableEditText(
 
     @Composable
     fun RoundSocialMediaIcon(
-        image: Int, // Resource ID of the image
+        image: Int,
         contentDescription: String,onClick: () -> Unit,
         backgroundColor: Color
     ) {
@@ -83,7 +85,7 @@ fun ReusableEditText(
                 .clip(CircleShape)
                 .clickable { onClick() }
                 .background(backgroundColor, CircleShape),
-            //colorFilter = ColorFilter.tint(Color.White) // Assuming white icon on colored background
+            //colorFilter = ColorFilter.tint(Color.White)
         )
     }
 
@@ -92,12 +94,7 @@ fun ReusableEditText(
 
         Text(text = text, modifier = modifier, color = Color.White)
     }
-//    @Composable
-//    fun ReUsableRow(modifier: Modifier) {
-//        Row(modifier = modifier) {
-//
-//        }
-//    }
+
 
 }
 

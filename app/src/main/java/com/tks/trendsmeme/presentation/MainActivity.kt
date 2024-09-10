@@ -1,16 +1,20 @@
 package com.tks.trendsmeme.presentation
 
+import android.content.Context
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,11 +23,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +57,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
 import com.tks.trendsmeme.presentation.customComponents.CustomComponents
+import com.tks.trendsmeme.presentation.pages.OtpScreen
 import com.tks.trendsmeme.ui.theme.TrendsMemeTheme
 import com.tks.trendsmeme.utils.SingleSelectDialog
 import androidx.compose.material3.Text as Text1
@@ -57,14 +65,17 @@ import androidx.compose.material3.Text as Text1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         installSplashScreen().setKeepOnScreenCondition(
             condition = { false }
         )
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             TrendsMemeTheme {
-                EnterMobileNumberPage()
+                //EnterMobileNumberPage()
+                OtpScreen()
             }
         }
     }
@@ -101,15 +112,19 @@ fun AddContinueButton() {
         .height(80.dp)
         .padding(16.dp)
     CustomComponents().RoundedCornerButton(
-        onClick = { "Button clicked".showToast(context,Toast.LENGTH_LONG) },
+        onClick = { sendOtp(context) },
         text = "Continue",
         modifier
     )
 }
 
+fun sendOtp(context: Context) {
+    "Otp sent to your mobile".showToast(context,Toast.LENGTH_LONG)
+}
+
 @Composable
 fun AddAppLogo() {
-    Image(painter = painterResource(id = R.drawable.app_logo_slogan), contentDescription = "app icon",Modifier.size(100.dp))
+    Image(painter = painterResource(id = R.drawable.app_logo_slogan), contentDescription = "app icon",Modifier.size(150.dp),Alignment.TopStart)
 
 }
 
@@ -138,29 +153,37 @@ fun AddMobileEditText() {
         .fillMaxWidth()
         .padding(16.dp)
 
-    OutlinedTextField(
-        value = mobileNumber,
-        onValueChange = { mobileNumber = it },
-        textStyle = TextStyle(color= Color.White),
-        leadingIcon = {
-           Row(verticalAlignment =Alignment.CenterVertically) {
-               Image(
-                    painter = painterResource(id = R.drawable.baseline_flag_24),
-                    contentDescription = "India Flag",
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(
-                    modifier =Modifier.width(
-                        8.dp
+    Box(modifier = Modifier
+        .wrapContentSize()
+        .clip(CircleShape)
+        .padding(16.dp)
+        .background(colorResource(id = R.color.edittext_back_color))) {
+        OutlinedTextField(
+            value = mobileNumber,
+            onValueChange = { mobileNumber = it },
+            textStyle = TextStyle(color= Color.White),
+            leadingIcon = {
+                Row(verticalAlignment =Alignment.CenterVertically, modifier = Modifier.padding(10.dp)) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_flag_24),
+                        contentDescription = "India Flag",
+                        modifier = Modifier.size(24.dp)
                     )
-                )
-                Text("+91",color=Color.White)
-            }
-        },
-        label = { Text("Enter Mobile Number") },
-        modifier = modifier,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-    )
+                    Spacer(
+                        modifier =Modifier.width(
+                            8.dp
+                        )
+                    )
+                    Text("+91",color=Color.White)
+                }
+            },
+            label = { Text("Enter Mobile Number", color = Color.White) },
+            modifier = modifier,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+        )
+    }
+
+
 }
 
 @Composable
@@ -168,13 +191,13 @@ fun SeparatorWithOrCircle() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
+            .padding(vertical = 32.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Divider(
             modifier = Modifier
                 .weight(1f)
-                .padding(end = 16.dp)
+
         )
 
         // Circle with "OR" text
@@ -186,7 +209,7 @@ fun SeparatorWithOrCircle() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "OR",
+                text = "Or",
                 color = Color.DarkGray,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
@@ -196,7 +219,6 @@ fun SeparatorWithOrCircle() {
         Divider(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 16.dp)
         )
     }
 }
@@ -218,7 +240,7 @@ fun SocialMediaLogin() {
             backgroundColor = Color(0xFF3b5998)
         )
 
-        Spacer(modifier = Modifier.width(60.dp))
+        Spacer(modifier = Modifier.width(20.dp))
 
         CustomComponents().RoundSocialMediaIcon(
             image = R.drawable.google_icon,
@@ -231,7 +253,9 @@ fun SocialMediaLogin() {
 
 @Composable
 fun AddPrivacyText(){
-    Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp), verticalAlignment = Alignment.Bottom) {
         val modifier= Modifier
             .fillMaxWidth()
             .padding(16.dp)
@@ -286,7 +310,7 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    EnterMobileNumberPage()
 }
 
 @Composable

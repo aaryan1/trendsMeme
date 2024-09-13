@@ -1,4 +1,4 @@
-package com.tks.trendsmeme.application
+package com.tks.trendsmeme.di
 
 import android.content.Context
 import android.content.SharedPreferences

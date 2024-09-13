@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TrendsMemeTheme {
                 EnterMobileNumberPage()
-                //OtpScreen()
+
 
             }
         }

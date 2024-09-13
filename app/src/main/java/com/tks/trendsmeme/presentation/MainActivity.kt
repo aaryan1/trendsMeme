@@ -2,19 +2,15 @@ package com.tks.trendsmeme.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +25,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -41,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -56,9 +50,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
-import com.tks.trendsmeme.presentation.customComponents.CustomComponents
-import com.tks.trendsmeme.presentation.pages.OtpScreen
+import com.tks.trendsmeme.presentation.appComponents.AppComponents
 import com.tks.trendsmeme.ui.theme.TrendsMemeTheme
+import com.tks.trendsmeme.utils.GetAppComponents
 import com.tks.trendsmeme.utils.SingleSelectDialog
 import androidx.compose.material3.Text as Text1
 
@@ -74,8 +68,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrendsMemeTheme {
-                //EnterMobileNumberPage()
-                OtpScreen()
+                EnterMobileNumberPage()
+                //OtpScreen()
+
             }
         }
     }
@@ -89,12 +84,15 @@ fun EnterMobileNumberPage() {
         .background(color = Color.Black),
         verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
-        AddAppLogo()
-        AddMobileEditText()
-        AddContinueButton()
-        SeparatorWithOrCircle()
-        SocialMediaLogin()
-        AddPrivacyText()
+        GetAppComponents { appComponents ->
+
+            AddAppLogo(appComponents)
+            AddMobileEditText()
+            AddContinueButton()
+            SeparatorWithOrCircle()
+            SocialMediaLogin()
+            AddPrivacyText()
+        }
     }
 
 
@@ -111,7 +109,7 @@ fun AddContinueButton() {
         .fillMaxWidth()
         .height(80.dp)
         .padding(16.dp)
-    CustomComponents().RoundedCornerButton(
+    AppComponents().RoundedCornerButton(
         onClick = { sendOtp(context) },
         text = "Continue",
         modifier
@@ -123,9 +121,12 @@ fun sendOtp(context: Context) {
 }
 
 @Composable
-fun AddAppLogo() {
-    Image(painter = painterResource(id = R.drawable.app_logo_slogan), contentDescription = "app icon",Modifier.size(150.dp),Alignment.TopStart)
-
+fun AddAppLogo(appComponents: AppComponents) {
+    //Image(painter = painterResource(id = R.drawable.app_logo_slogan), contentDescription = "app icon",Modifier.size(150.dp),Alignment.TopStart)
+    appComponents.ReusableImage(
+        modifier = Modifier.size(150.dp),
+        imageResource = R.drawable.app_logo_slogan
+    )
 }
 
 //@Composable
@@ -233,7 +234,7 @@ fun SocialMediaLogin() {
             .padding(16.dp),
         horizontalArrangement = Arrangement.Center
     ) {
-        CustomComponents().RoundSocialMediaIcon(
+        AppComponents().RoundSocialMediaIcon(
             image = R.drawable.facebook_icon,
             contentDescription = "Login with Facebook",
             onClick ={ "Facebook login".showToast(context,Toast.LENGTH_LONG) },
@@ -242,7 +243,7 @@ fun SocialMediaLogin() {
 
         Spacer(modifier = Modifier.width(20.dp))
 
-        CustomComponents().RoundSocialMediaIcon(
+        AppComponents().RoundSocialMediaIcon(
             image = R.drawable.google_icon,
             contentDescription = "Login with Google",
             onClick = { "Google Login".showToast(context,Toast.LENGTH_LONG) },
@@ -259,7 +260,7 @@ fun AddPrivacyText(){
         val modifier= Modifier
             .fillMaxWidth()
             .padding(16.dp)
-        CustomComponents().ReusableLabel(modifier,text = "By proceeding, you consent to our Terms of Service, Privacy Policy, and Content Policy.")
+        AppComponents().ReusableLabel(modifier,text = "By proceeding, you consent to our Terms of Service, Privacy Policy, and Content Policy.")
     }
 
 }

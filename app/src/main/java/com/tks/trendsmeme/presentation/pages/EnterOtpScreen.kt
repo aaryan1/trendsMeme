@@ -17,95 +17,106 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
-import com.tks.trendsmeme.presentation.customComponents.CustomComponents
+import com.tks.trendsmeme.presentation.appComponents.AppComponents
+import com.tks.trendsmeme.utils.GetAppComponents
+
+
+//@EntryPoint
+//@InstallIn(SingletonComponent::class)
+//interface CustomComponentsEntryPoint {
+//    fun getCustomComponents(): CustomComponents
+//}
+//@Composable
+//fun OtpScreenEntryPoint(){
+//    val appComponents = EntryPointAccessors.fromApplication(LocalContext.current,
+//         CustomComponentsEntryPoint::class.java).getCustomComponents()
+//   // OtpScreen(appComponents)
+//}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtpScreen() {
-    val context = LocalContext.current
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("OTP", color = colorResource(id = R.color.white)) },
-                navigationIcon = {
-                    IconButton(onClick = { /* Navigate back */ }) {
-                        Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = colorResource(id = R.color.white)
+    GetAppComponents { appComponents ->
 
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black
-                )
-            )
-        },
-        
-        // here padding values are taken from scaffold and help us to set the content in center just below the top bar
-        content = { padding ->
+        val context = LocalContext.current
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("OTP", color = colorResource(id = R.color.white)) },
+                    navigationIcon = {
+                        IconButton(onClick = { /* Navigate back */ }) {
+                            Icon(
+                                imageVector = androidx.compose.material.icons.Icons.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = colorResource(id = R.color.white)
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Black)
-                    .padding(padding) //this is padding equal to the padding values from scaffold
-                    .padding(50.dp),// to provide more space then the padding from top app bar
-                horizontalAlignment = Alignment.CenterHorizontally,
-                //verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "verification code sent to +91-8439367525",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Black
+                    )
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
+            },
+
+            // here padding values are taken from scaffold and help us to set the content in center just below the top bar
+            content = { padding ->
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.Black)
+                        .padding(padding) //this is padding equal to the padding values from scaffold
+                        .padding(50.dp),// to provide more space then the padding from top app bar
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    //verticalArrangement = Arrangement.Center
                 ) {
-                    for (i in 1..4) {
-                        Surface(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .padding(8.dp),
-                            shape = RoundedCornerShape(8.dp),
-                            color = colorResource(id = R.color.edittext_back_color)
-                        ) {
-                            // Add logic for displaying OTP digits here
+                    appComponents.ReusableText(
+                        msg = "verification code sent to +91-8439367525",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        for (i in 1..4) {
+                            Surface(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(8.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                color = colorResource(id = R.color.edittext_back_color)
+                            ) {
+                                // Add logic for displaying OTP digits here
+                            }
                         }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    appComponents.ReusableText(msg = "Didn't get the OTP?", color = Color.White)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = { resendOtp(context) },
+                        modifier = Modifier.width(200.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.edittext_back_color)
+                        )
+                    ) {
+                        appComponents.ReusableText(msg = "Resend SMS in 18s", color = Color.White, fontSize = 16
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                    AddContinueButton(appComponents)
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Didn't get the OTP?",
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Button(
-                    onClick = { resendOtp(context) },
-                    modifier = Modifier.width(200.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.edittext_back_color)
-                    )
-                ) {
-                    Text(
-                        text = "Resend SMS in 18s",
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                }
-                Spacer(modifier = Modifier.height(32.dp))
-               AddContinueButton()
-            }
-        },
+            },
 
-    )
+            )
+    }
+
 }
 
 fun resendOtp(current: Context) {
@@ -113,13 +124,13 @@ fun resendOtp(current: Context) {
 }
 
 @Composable
-fun AddContinueButton() {
+fun AddContinueButton(appComponents: AppComponents) {
     val context= LocalContext.current
     val modifier = Modifier
         .fillMaxWidth()
         .height(80.dp)
         .padding(16.dp)
-    CustomComponents().RoundedCornerButton(
+    appComponents.RoundedCornerButton(
         onClick = { "Otp verified".showToast(context, Toast.LENGTH_LONG) },
         text = "Continue",
         modifier
@@ -128,5 +139,5 @@ fun AddContinueButton() {
 @Preview
 @Composable
 fun OtpScreenPreview() {
-    OtpScreen()
+    //OtpScreen(appComponents)
 }

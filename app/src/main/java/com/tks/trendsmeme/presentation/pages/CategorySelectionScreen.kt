@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
-import com.tks.trendsmeme.presentation.customComponents.CustomComponents
+import com.tks.trendsmeme.presentation.appComponents.AppComponents
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,7 +93,7 @@ fun AddHomeRedirectButton() {
         .fillMaxWidth()
         .height(80.dp)
         .padding(16.dp)
-    CustomComponents().RoundedCornerButton(
+    AppComponents().RoundedCornerButton(
         onClick = { "Button clicked".showToast(context, Toast.LENGTH_LONG) },
         text = "Go to home",
         modifier
@@ -150,7 +150,7 @@ fun CategoryCard2(title: String, icon:Int ){
 
         }
 
-        CustomComponents().ReusableLabel(
+        AppComponents().ReusableLabel(
             modifier = Modifier
                 .padding(1.dp), text = title
         )

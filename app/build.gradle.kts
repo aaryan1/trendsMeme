@@ -17,7 +17,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        /** This multiDexEnabled has to turn true due to error means your app has exceeded the maximum number of methods allowed in a single DEX file (65,536). This limit is imposed by the Dalvik Executable (DEX) format used by Android. H*/
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -75,7 +76,8 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.multidex)
     implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
@@ -85,4 +87,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }

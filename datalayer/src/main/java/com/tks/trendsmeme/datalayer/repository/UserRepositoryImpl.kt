@@ -7,7 +7,8 @@ import com.tks.trendsmeme.domainlayer.repository.UserRepository
 // need to fix it for @inject error
 class UserRepositoryImpl(private val apiService: AppApiService): UserRepository {
     override suspend fun getUser(userId: Int): User {
-        return getUser(userId)
+        return apiService.getUser(userId)
+    }
     }
 }
 

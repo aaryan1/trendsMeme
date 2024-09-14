@@ -68,8 +68,13 @@ dependencies {
 
     // Hilt core library
     implementation(libs.hilt.android)
+    implementation(project(":datalayer"))
+    implementation(project(":domainlayer"))
     // Hilt compiler plugin
     kapt (libs.hilt.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     implementation(libs.androidx.navigation.compose)
 

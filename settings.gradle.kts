@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "TrendsMeme"
 include(":app")
- 
+include(":datalayer")
+include(":domainlayer")

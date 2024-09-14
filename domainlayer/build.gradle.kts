@@ -1,18 +1,21 @@
 plugins {
-    alias(libs.plugins.android.application)
+    //alias(libs.plugins.android.application)
+    //alias(libs.plugins.android.library)
+    id("com.android.library")
+    //id("java-library")
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
-    namespace = "com.tks.trendsmeme"
+    namespace = "com.tks.trendsmeme.domainlayer"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.tks.trendsmeme"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        //applicationId = "com.tks.trendsmeme.domainlayer"
+       // minSdk = 24
+        //targetSdk = 34
+       // versionCode = 1
+        //versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,4 +46,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.javax.inject)
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

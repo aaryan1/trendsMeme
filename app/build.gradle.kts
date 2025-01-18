@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
     id ("kotlin-kapt")
+    //id("com.android.application")
+    id("com.google.gms.google-services")
     // id("com.google.dagger.hilt.android") version libs.versions.hiltAndroid.get()
 
 }
@@ -23,15 +25,27 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "api_key", "API_KEY")
     }
 
     buildTypes {
         release {
+            buildConfigField("String", "api_key", "API_KEY")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug{
+            buildConfigField("String", "api_key", "API_KEY")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
     compileOptions {
@@ -79,6 +93,9 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.multidex)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

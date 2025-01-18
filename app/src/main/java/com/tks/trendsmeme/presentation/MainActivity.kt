@@ -48,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.multidex.BuildConfig
 import com.tks.trendsmeme.R
 import com.tks.trendsmeme.extensions.showToast
 import com.tks.trendsmeme.presentation.appComponents.AppComponents
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun EnterMobileNumberPage() {
-
+    val apiKey = BuildConfig.BUILD_TYPE
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.Black),
@@ -341,9 +342,4 @@ fun MyScreen() {
                 options = fruits,
                 selectedOption = selectedFruit,
                 onOptionSelected = { selectedFruit = it },
-                onDismiss = { showDialog = false }
-            )
-        }
-    }
-}
-
+                on

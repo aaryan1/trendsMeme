@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "135178134247",
+    "project_id": "trendmeme-5e1b4",
+    "storage_bucket": "trendmeme-5e1b4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135178134247:android:ebe9946590cdfe4b873842",
+        "android_client_info": {
+          "package_name": "com.tks.trendsmeme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtuA7bJCRXNTat_EeQjqbd0-vvVzMtStY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
